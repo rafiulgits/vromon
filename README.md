@@ -30,3 +30,17 @@ for django and change the database dependency on `settings.py`.
   
 * To run the project in localhost:
   > `python manage.py runserver`
+
+***
+
+### Models:
+#### `User Model`
+![account mode](doc/vromon_user_model.svg)
+
+
+#### `Profile Model`
+![account mode](doc/vromon_profile_model.svg)
+
+
+#### `Spot Model`
+![account mode](doc/vromon_spot_model.svg)
