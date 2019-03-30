@@ -50,7 +50,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
 	"""
 	Doc here
 	"""
-	phone = models.CharField(max_length=12, unique=True)
+	phone = models.CharField(max_length=11, unique=True)
 	name = models.CharField(max_length=80)
 	gender = models.CharField(max_length=1, choices=_GENDER, default='*')
 	email = models.EmailField(max_length=45, unique=True)

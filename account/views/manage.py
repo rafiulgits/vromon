@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
+from account.models import Account
 
 
 def profile(request):
 	context = {}
+	user = request.user
 	return render(request, 'account/profile/view.html',context)
 
 

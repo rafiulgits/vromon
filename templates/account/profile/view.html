@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="card">
+
+        <div class="card-header">
+            <img src="https://i.postimg.cc/0N8mRzvP/user.png" alt="profile-image" class="profile-img">
+        </div>
+        <div class="card-body">
+            <p class="username">{{ user.name }}</p>
+            <p class="email">{{ user.email }}</p>
+            <p class="phone-number">{{ user.phone }}</p>
+        </div>
+    
+
+    </div>
+
+
+{% endblock %}
+
+
+{% block extra_script %}
+{% endblock %}
