@@ -27,8 +27,8 @@ class SignupForm(forms.ModelForm):
 				'placeholder' : 'Email', 'class' : 'form-control'
 				}),
 
-			'gender' : forms.TextInput(attrs={
-				}),
+			'gender' : forms.Select(attrs={
+				'class' : 'custom-select'}),
 		}
 
 	def clean_phone(self):

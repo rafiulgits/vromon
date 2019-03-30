@@ -9,7 +9,14 @@
 {% block content %}
  <form class="form-block" method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.name }}
+    {{ form.phone}}
+    {{ form.email}}
+    <div class="input-field col s12">
+        {{ form.gender }}
+    </div>
+    {{ form.password1 }}
+    {{ form.password2 }}
     <input type="submit" value="Sign Up" class="btn btn-success btn-block">
     </form>
     <div>

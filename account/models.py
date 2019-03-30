@@ -8,7 +8,8 @@ from django.db import models
 _GENDER = (
 	('F', 'Female'),
 	('M', 'Male'),
-	('O', 'Other')
+	('O', 'Other'),
+	('*', 'Not to say')
 )
 
 
@@ -51,7 +52,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
 	"""
 	phone = models.CharField(max_length=12, unique=True)
 	name = models.CharField(max_length=80)
-	gender = models.CharField(max_length=1, choices=_GENDER)
+	gender = models.CharField(max_length=1, choices=_GENDER, default='*')
 	email = models.EmailField(max_length=45, unique=True)
 	thumbnail = models.TextField(default='https://i.postimg.cc/0N8mRzvP/user.png')
 
