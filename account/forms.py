@@ -27,8 +27,7 @@ class SignupForm(forms.ModelForm):
 				'placeholder' : 'Email', 'class' : 'form-control'
 				}),
 
-			'gender' : forms.Select(attrs={
-				'class' : 'custom-select'
+			'gender' : forms.TextInput(attrs={
 				}),
 		}
 

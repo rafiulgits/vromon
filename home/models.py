@@ -1,7 +1,8 @@
-from account.models import Account, GuideProfile
+from account.models import Account,GuideProfile
 
 from django.db import models
 
+from uuid import uuid4
 
 
 class Spot(models.Model):
@@ -12,7 +13,7 @@ class Spot(models.Model):
 
 
 class SpotGallery(models.Model):
-	uid = models.CharField(max_length=32, primary_key=True)
+	uid = models.UUIDField(default=uuid4, primary_key=True)
 	path = models.TextField()
 	spot = models.ForeignKey(Spot, on_delete=models.CASCADE)
 	date_time = models.DateTimeField(auto_now=True)
@@ -20,7 +21,7 @@ class SpotGallery(models.Model):
 
 
 class SpotComment(models.Model):
-	uid = models.CharField(max_length=32, primary_key=True)
+	uid = models.UUIDField(default=uuid4, primary_key=True)
 	body = models.TextField()
 	spot = models.ForeignKey(Spot, on_delete=models.CASCADE)
 	user = models.ForeignKey(Account, on_delete=models.CASCADE)
@@ -37,7 +38,7 @@ class SpotGuide(models.Model):
 
 
 class SpotGuideMedia(models.Model):
-	uid = models.CharField(max_length=32, primary_key=True)
+	uid = models.UUIDField(default=uuid4, primary_key=True)
 	path = models.TextField()
 	spot_guide = models.ForeignKey(SpotGuide, on_delete=models.CASCADE)
 
@@ -54,7 +55,7 @@ class Event(models.Model):
 
 
 class EventComment(models.Model):
-	uid = models.CharField(max_length=32, primary_key=True)
+	uid = models.UUIDField(default=uuid4, primary_key=True)
 	body = models.TextField()
 	user = models.ForeignKey(Account, on_delete=models.CASCADE)
 	event = models.ForeignKey(Event, on_delete=models.CASCADE)

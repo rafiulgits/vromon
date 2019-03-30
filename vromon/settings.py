@@ -27,18 +27,19 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODE = 'account.Account'
+AUTH_USER_MODEL = 'account.Account'
 
 # Application definition
 
 INSTALLED_APPS = [
-    'home.apps.HomeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'account', 'home',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +78,12 @@ WSGI_APPLICATION = 'vromon.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'vromon',
+        'USER': 'postgres',
+        'PASSWORD':'pass1234',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

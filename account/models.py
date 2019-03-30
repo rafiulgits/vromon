@@ -2,93 +2,94 @@ from django.contrib.auth.models import (
 	AbstractBaseUser, BaseUserManager,PermissionsMixin, 
 	_user_has_module_perms, _user_has_perm, _user_get_all_permissions)
 
-from django.contrib.auth import get_backends
 from django.db import models
 
 
+_GENDER = (
+	('F', 'Female'),
+	('M', 'Male'),
+	('O', 'Other')
+)
+
+
 class UserManager(BaseUserManager):
+	"""
+	Doc here
+	"""
+	def create_user(self, phone, name, email, gender, password=None, is_staff=False, is_superuser=False):
 
-	def create_user(self,phone,password=None,name=None,email=None,
-		is_staff=False,is_admin=False):
+		if not phone or not name or not email:
+			raise ValueError('name, phone and email required')
+
+
 		if not password:
-			raise ValueError('password needed')
-		if not name:
-			raise ValueError('name needed')
-		if not email:
-			raise ValueError('email needed')
+			raise ValueError('password required')
 
-		user = self.model(phone=phone)
-		user.name = name
-		user.email = email
-		user.is_admin = is_admin
+
+		user = self.model(phone=phone, name=name, email=email, gender=gender)
 		user.is_staff = is_staff
+		user.is_superuser = is_superuser
 		user.set_password(password)
-		user.save(self._db)
+		user.save()
+
 		return user
 
-	def create_staffuser(self, phone, password, name, email):
-		if not phone or password:
-			raise ValueError('must have the phone and password')
-		if not name:
-			raise ValueError('name needed')
-		if not email:
-			raise ValueError('email needed')
 
-
-		user = self.create_user(phone, password, name, email, True,False)
+	def create_staffuser(self, phone, name, email, gender, password=None):
+		user = self.create_user(phone, name, email, gender, password, True, False)
 		return user
 
-	def create_superuser(self, phone, password, name, email):
-		"""
-		to create an admin
-		"""
-		if not phone or not password:
-			raise ValueError('must have phone and password')
-		if not name:
-			raise ValueError('name needed')
-		if not email:
-			raise ValueError('email needed')
 
+	def create_superuser(self, phone, name, email, gender, password=None):
+		user = self.create_user(phone, name, email, gender, password, True, True)
 
-		user = self.create_user(phone, password, name, email, True, True)
-		return user
 
 
 class Account(AbstractBaseUser,PermissionsMixin):
-	
-	is_active = models.BooleanField(default=True)
-
-	is_admin = models.BooleanField(default=False)
-	is_staff = models.BooleanField(default=False)
-	
+	"""
+	Doc here
+	"""
 	phone = models.CharField(max_length=12, unique=True)
 	name = models.CharField(max_length=80)
-	email = models.EmailField(max_length=120,unique=True)
+	gender = models.CharField(max_length=1, choices=_GENDER)
+	email = models.EmailField(max_length=45, unique=True)
+	thumbnail = models.TextField(default='https://i.postimg.cc/0N8mRzvP/user.png')
+
+	has_notification = models.BooleanField(default=False)
+	
+	is_active = models.BooleanField(default=True)
+	is_staff = models.BooleanField(default=False)
+	is_superuser = models.BooleanField(default=False)
+
+	USERNAME_FIELD = 'phone'
+	REQUIRED_FIELDS = ['name','email','gender']
 
 	objects = UserManager()
 
-	USERNAME_FIELD = 'phone'
-	REQUIRED_FIELDS = ['name','email',]
+	def __str__(self):
+		return self.name + ': '+self.phone
+
+	def get_username(self):
+		return self.phone + ' : '+self.name
 
 
 	def has_perm(self, perm, obj=None):
-		if self.is_admin:
-			return True
-		return _user_has_perm(self, perm, obj)
-
-	def has_perms(self, perm_list, obj=None):
-		return all(self.has_perm(perm, obj) for perm in perm_list)
-
-	def has_module_perms(self, app_label):
-		if self.is_admin or self.is_staff:
+		if self.is_superuser:
 			return True
 		return False
 
-	def get_username(self):
-		return self.name+' - '+self.phone
+
+	def has_module_perm(self, app_label):
+		if self.is_superuser:
+			return True
+		return False
+
+	def has_module_perms(self, perms, obj=None):
+		return all(self.has_perm(perm, obj) for perm in perms)
+
 
 
 class GuideProfile(models.Model):
-	account = models.OneToOneField(Account, primary_key=True, on_delete=models.CASCADE)
+	account = models.OneToOneField(Account, on_delete=models.CASCADE, primary_key=True)
 	description = models.TextField()
 	rating = models.PositiveIntegerField(default=0)

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+	<title>Sign In</title>
+{% endblock %}
+
+
+{% block content %}
+	<form method="POST">
+		{% csrf_token %}
+		{{ form.phone }}
+		{{ form.password }}
+		<input type="submit" value="Sign In" class="btn btn-success btn-block">
+	</form>
+	<div>
+		Have no account?
+		<a href="/account/signup/">Create an account</a>
+	</div>
+{% endblock %}
+
+
+{% block extra_script %}
+{% endblock %}
