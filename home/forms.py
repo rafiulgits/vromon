@@ -145,7 +145,11 @@ class SpotGuideMediaForm(model.ModelForm):
 			spot_guide_media.save()
 		return spot_guide_media
 
+		widgets = {
+			"body": forms.TextInput(attrs={'placeholder':'giver your comment'})
+		}
 
 	def __init__(self, *args, **kwargs):
 		self.spot_guide = kwargs.pop('spot_guide', None)
 		super(SpotGuideMediaForm, self).__init__(*args, **kwargs)
+
