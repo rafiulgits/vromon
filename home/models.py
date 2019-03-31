@@ -1,7 +1,6 @@
 from account.models import Account,GuideProfile
-
 from django.db import models
-
+from generic.variables import IMAGE_DIR
 from uuid import uuid4
 
 
@@ -9,12 +8,16 @@ class Spot(models.Model):
 	uid = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=30)
 	description = models.TextField()
+	logo = models.ImageField(upload_to=IMAGE_DIR)
+
+	def __str__(self):
+		return self.name
 
 
 
 class SpotGallery(models.Model):
 	uid = models.UUIDField(default=uuid4, primary_key=True)
-	path = models.TextField()
+	image = models.ImageField(upload_to=IMAGE_DIR)
 	spot = models.ForeignKey(Spot, on_delete=models.CASCADE)
 	date_time = models.DateTimeField(auto_now=True)
 
@@ -34,12 +37,13 @@ class SpotGuide(models.Model):
 	guide = models.ForeignKey(GuideProfile, on_delete=models.CASCADE)
 	spot = models.ForeignKey(Spot, on_delete=models.CASCADE)
 	details = models.TextField()
+	logo = models.ImageField(upload_to=IMAGE_DIR)
 
 
 
 class SpotGuideMedia(models.Model):
 	uid = models.UUIDField(default=uuid4, primary_key=True)
-	path = models.TextField()
+	image = models.ImageField(upload_to=IMAGE_DIR)
 	spot_guide = models.ForeignKey(SpotGuide, on_delete=models.CASCADE)
 
 
