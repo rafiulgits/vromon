@@ -10,9 +10,9 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
 
 	{% block extra_head %}
 	{% endblock %}
@@ -22,21 +22,26 @@
 
 <body>
 
-	<div class="navbar fixed-top navbar-dark bg-teal container-fluid">
+	<div class="navbar fixed-top navbar-dark container-fluid bg-teal">
 		<a href="/" class="navbar-brand col-4">Vromon</a>
 		<div class="input-group col-6 ">
 			<input type="text" name="search" placeholder="Where To?" class="form-control search-bar">
-			<div class="dropdown">
-				<a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="far fa-user-circle" id="profile-button"></i>
-				</a>
-
-				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-					<a class="dropdown-item" href="#">Profile</a>
-					<a class="dropdown-item" href="#">Create Event</a>
-					<a class="dropdown-item" href="#">Log Out</a>
+			{% if request.user.is_authenticated %}
+				<div class="dropdown">
+					<a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<img src="{{request.user.thumbnail}}" id="profile-button">
+					</a>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<a class="dropdown-item" href="/account/">{{request.user.name}}</a>
+						<a class="dropdown-item" href="#">Create Event</a>
+						<a class="dropdown-item" href="/account/signout/">Sign Out</a>
+					</div>
 				</div>
-			</div>
+			{% else %}
+				<a href="/account/signin/" class="nav-link btn btn-light mr-2">Signin</a>
+				<a href="/account/signup/" class="nav-link btn btn-light mr">Signup</a>
+			{% endif %}
+			
 		</div>
 	</div>
 

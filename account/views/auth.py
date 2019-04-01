@@ -1,4 +1,4 @@
-from account.forms import SignupForm, SigninForm
+from account.forms import SignupForm, SigninForm,PasswordChangeForm
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
@@ -29,6 +29,7 @@ def signup(request):
 	context['form'] = form
 
 	return render(request, 'account/auth/signup.html', context)
+
 
 
 def signin(request):

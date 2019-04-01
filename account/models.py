@@ -9,7 +9,7 @@ _GENDER = (
 	('F', 'Female'),
 	('M', 'Male'),
 	('O', 'Other'),
-	('*', 'Not to say')
+	('*', 'Not to say'),
 )
 
 
@@ -20,8 +20,7 @@ class UserManager(BaseUserManager):
 	def create_user(self, phone, name, email, gender, password=None, is_staff=False, is_superuser=False):
 
 		if not phone or not name or not email:
-			raise ValueError('name, phone and email required')
-
+			raise ValueError('name, phone, email required')
 
 		if not password:
 			raise ValueError('password required')
@@ -50,11 +49,11 @@ class Account(AbstractBaseUser,PermissionsMixin):
 	"""
 	Doc here
 	"""
-	phone = models.CharField(max_length=12, unique=True)
+	phone = models.CharField(max_length=11, unique=True)
 	name = models.CharField(max_length=80)
 	gender = models.CharField(max_length=1, choices=_GENDER, default='*')
 	email = models.EmailField(max_length=45, unique=True)
-	thumbnail = models.TextField(default='https://i.postimg.cc/0N8mRzvP/user.png')
+	thumbnail = models.TextField(default='https://i.postimg.cc/Y2zkXSFB/user.png')
 
 	has_notification = models.BooleanField(default=False)
 	
@@ -63,7 +62,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
 	is_superuser = models.BooleanField(default=False)
 
 	USERNAME_FIELD = 'phone'
-	REQUIRED_FIELDS = ['name','email','gender']
+	REQUIRED_FIELDS = ['name', 'email', 'gender']
 
 	objects = UserManager()
 
@@ -71,7 +70,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
 		return self.name + ': '+self.phone
 
 	def get_username(self):
-		return self.phone + ' : '+self.name
+		return self.phone
 
 
 	def has_perm(self, perm, obj=None):
@@ -87,7 +86,6 @@ class Account(AbstractBaseUser,PermissionsMixin):
 
 	def has_module_perms(self, perms, obj=None):
 		return all(self.has_perm(perm, obj) for perm in perms)
-
 
 
 class GuideProfile(models.Model):

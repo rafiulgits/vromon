@@ -7,6 +7,7 @@ from uuid import uuid4
 class Spot(models.Model):
 	uid = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=30)
+	district = models.CharField(max_length=20)
 	description = models.TextField()
 	logo = models.ImageField(upload_to=IMAGE_DIR)
 

@@ -11,7 +11,7 @@
     <div class="d-flex justify-content-center align-items-center">
         <div class="col-md-7 list-group-item">
             <h5 align="center">Registration Form</h5>
-            <form class="form-block" method="POST">
+            <form class="list-group-item" method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <input type="submit" value="Sign Up" class="btn btn-success btn-block">

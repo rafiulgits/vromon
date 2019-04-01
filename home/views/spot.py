@@ -1,5 +1,7 @@
-from django.shortcuts import render, redirect
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import render, redirect, HttpResponse
 
+from home.models import Spot,SpotGallery
 
 
 def list(request):
@@ -9,4 +11,14 @@ def list(request):
 
 def detail(request, name):
 	context = {}
-	return render(request, 'home/index.html', context)
+	try:
+		spot = Spot.objects.get(name__iexact=name)
+		gallery = SpotGallery.objects.filter(spot_id=spot.uid)
+		context['spot'] = spot
+		context['gallery'] = gallery
+		return render(request, 'home/spot/detail.html', context)
+
+	except ObjectDoesNotExist as e:
+		pass
+
+	return HttpResponse('<h1 align="center">Spot not found</h1>')

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+	<title>{{request.user.name}} | Update</title>
+{% endblock %}
+
+
+{% block content %}
+	<div class="d-flex justify-content-center align-items-center">
+		<div class="col-md-6 list-group-item">
+			
+			<h5 align="center">Update Info</h5>
+			<form method="POST" class="list-group-item">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<input type="submit" value="Update" class="btn btn-success btn-block">
+			</form>
+			<a href="/account/" class="list-group-item">Back to profile</a>
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block extra_script %}
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+	<title>{{spot.name}}</title>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css">
+
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/home/spot/detail.css'%}">
+{% endblock %}
+
+
+{% block content %}
+	<div class="col-md-12">
+		<div class="logo-container list-group-item">
+			<img src="/media/{{spot.logo}}">
+			<div class="text-block"> 
+				<h1 id="title">{{spot.name}}</h1>
+			</div>
+		</div>
+		<p class="list-group-item" id="description">{{spot.description}}</p>
+		<br>
+		<div class="spot-image-slider">
+			{% for item in gallery %}
+				<div class="image-item">
+					<img src="/media/{{item.image}}">
+				</div>
+			{% endfor %}
+		</div>
+		<br><br><br><br><br>
+	</div>
+{% endblock %}
+
+
+{% block extra_script %}
+	<script
+		src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		crossorigin="anonymous">
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+	<script type="text/javascript" src="{% static 'js/home/spot/detail.js'%}"></script>
+{% endblock %}
