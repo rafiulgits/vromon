@@ -13,12 +13,7 @@
             <h5 align="center">Registration Form</h5>
             <form class="form-block" method="POST">
                 {% csrf_token %}
-                {{ form.name }}
-                {{ form.phone}}
-                {{ form.email}}
-                {{ form.gender }}
-                {{ form.password1 }}
-                {{ form.password2 }}
+                {{ form.as_p }}
                 <input type="submit" value="Sign Up" class="btn btn-success btn-block">
             </form>
             <br>
