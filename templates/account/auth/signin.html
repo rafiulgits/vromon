@@ -12,8 +12,7 @@
 			<h5 align="center">Sign in</h5>
 			<form method="POST" class="list-group-item">
 				{% csrf_token %}
-				{{ form.phone }}
-				{{ form.password }}
+				{{ form.as_p }}
 				<input type="submit" value="Sign In" class="btn btn-success btn-block">
 			</form>
 			<a href="/account/password-reset/" class="list-group-item">Forget Password?</a>
