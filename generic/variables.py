@@ -1,4 +1,5 @@
 LOGIN_URL = '/login/'
+IMAGE_DIR = 'media/images'
 FILE_CHUNK_SIZE = 2500000
 
 

@@ -1,67 +1,155 @@
 from django import forms
+from generic.media import Image
+from generic.variables import IMAGE_DIR
+from home.models import (SpotComment , Event , EventComment,SpotGuide,
+	SpotGuideMedia)
 
-from generic import Image
-
-from home.models import (Account, GuideProfile, Spot, 
-	SpotMedia)
-
-
-class AccountCreateForm(forms.ModelForm):
-	password1 = forms.CharField(widget=forms.PasswordInput)
-	password2 = forms.CharField(label='Confirm Password',widget=forms.PasswordInput)
+class SpotCommentForm(forms.ModelForm):
 
 	class Meta:
-		model = Account
-		fields = ['phone','name','email','gender',]
+		model = SpotComment
+		fields = ["body"]
+
+		widgets = {
+			"body": forms.TextInput(attrs={'placeholder':'giver your comment'})
+		}
 
 
-	def clean_phone(self):
-		"""	
-		to check the user is already taken or not
-		"""
-		phone = self.cleaned_data.get('phone')
-		query = User.objects.filter(phone=phone)
+	def save(self, commit=True):
+		spot_comment = super(SpotCommentForm, self).save(commit=False)
+		spot_comment.user = self.user
+		spot_comment.spot = self.spot
+		if commit:
+			spot_comment.save()
 
-		if query.exists():
-			raise forms.ValidationError('this phone is taken')
-
-		email =  self.cleaned_data.get('email')
-		query = User.objects.filter(email=email)
-
-		if query.exists():
-			raise forms.ValidationError('Email is taken')
-
-		return phone
-
-	def clean_password2(self):
-		"""
-		checking two raw passwords and return the password if matched
-		"""
-		password1 = self.cleaned_data.get('password1')
-		password2 = self.cleaned_data.get('password2')
-
-		if password1 and password2 and password1 != password2:
-			raise forms.ValidationError("Password don't matched")
-		return password2
-	
+		return spot_comment
 
 
-class GuideProfileForm(forms.ModelForm):
+	def __init__(self, *args, **kwargs):
+		self.spot = kwargs.pop('spot', None)
+		self.user = kwargs.pop('user', None)
+		super(SpotCommentForm, self).__init__(*args, **kwargs)
+
+
+
+class EventForm(forms.ModelForm):
 	class Meta:
-		model = GuideProfile
-		fields = ['__all__']
+		model = Event
+		fields = [
+			"title",
+			"description"
+		]
+
+		widgets={
+			"title": forms.TextInput(attrs={'placeholder' : 'event title'}),
+			"description" : forms.TextInput(attrs={'placeholder' : 'event description'})
+		}
+
+
+	def save(self, commit=True):
+		event = super(EventForm, self).save(commit=False)
+		event.organizer = self.organizer
+		if commit:
+			event.save()
+		return event
+
+
+	def __init__(self, *args, **kwargs):
+		self.organizer = kwargs.pop('organizer', None)
+		super(EventForm, self).__init__(*args, **kwargs)
 
 
 
-class  SpotMedia(forms.ModelForm):
-
-	file = forms.ImageField(widget=forms.FileInput(attrs={}))
+class EventCommentForm(forms.ModelForm):
 	class Meta:
-		model = SpotMedia
-		fields = ['']
+		model = EventComment
+		fields = [
+			"body"
+		]
+
+		widgets = {
+			"body": forms.TextInput(attrs={'placeholder':'giver your comment'})
+		}
 
 
 
-	def save(self):
-		file = self.cleaned_data['file']
-		img_src = Image.load(file_stream=file)
+	def save(self, commit=True):
+		event_comment = super(EventCommentForm, self).save(commit=False)
+		event_comment.user = self.user
+		event_comment.event = self.event
+		if commit:
+			event_comment.save()
+		return event_comment
+
+
+
+	def  __init__(self, *args, **kwargs):
+		self.user = kwargs.pop('user', None)
+		self.event = kwargs.pop('event', None)
+		super(EventCommentForm, self).__init__(*args, **kwargs)
+
+
+
+class SpotGuideForm(models.ModelForm):
+
+	class Meta:
+		model = SpotGuide
+		fields = ['spot', 'detail', 'logo']
+
+		widgets = {
+			'spot' : forms.Select(attrs={
+				'class' : ''
+				}),
+
+			'detail' : forms.TextInput(attrs={
+				'class' : ''
+				}),
+
+			'logo' : forms.FileInput(attrs={
+				'class' : ''
+				})
+		}
+
+
+	def save(self, commit=True):
+		spot_guide = super(SpotGuideForm, self).save(commit=False)
+		if commit:
+			spot_guide.guide = self.guide
+			spot_guide.save()
+
+		return spot_guide
+
+
+	def __init__(self, *args, **kwargs):
+		self.guide = kwargs.pop('guide', None)
+		super(SpotGuideForm, self).__init__(*args, **kwargs)
+
+
+class SpotGuideMediaForm(model.ModelForm):
+	class Meta:
+		model = SpotGuideMedia
+		fields = ['image']
+
+		widgets = {
+			'image' : forms.FileInput(attrs={
+				'class' : ''
+			})
+		}
+
+
+	def save(self, commit=True):
+		spot_guide_media = super(SpotGuideMediaForm, self).save(commit=False)
+		spot_guide_media.spot_guide = self.spot_guide
+
+		if commit:
+			spot_guide_media.save()
+		return spot_guide_media
+
+		widgets = {
+			"body": forms.TextInput(attrs={'placeholder':'giver your comment'})
+		}
+
+	def __init__(self, *args, **kwargs):
+		self.spot_guide = kwargs.pop('spot_guide', None)
+		super(SpotGuideMediaForm, self).__init__(*args, **kwargs)
+

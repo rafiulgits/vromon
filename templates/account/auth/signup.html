@@ -7,24 +7,25 @@
 
 
 {% block content %}
- <form class="form-block" method="POST">
-    {% csrf_token %}
-    {{ form.name }}
-    {{ form.phone}}
-    {{ form.email}}
-    <div class="input-field col s12">
-        {{ form.gender }}
+
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="col-md-7 list-group-item">
+            <h5 align="center">Registration Form</h5>
+            <form class="form-block" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Sign Up" class="btn btn-success btn-block">
+            </form>
+            <br>
+            <div class="list-group-item">
+                Already have an account?
+                <a href="/account/signin/" class="">
+                    signin
+                </a>
+            </div>
+        </div>
     </div>
-    {{ form.password1 }}
-    {{ form.password2 }}
-    <input type="submit" value="Sign Up" class="btn btn-success btn-block">
-    </form>
-    <div>
-        Already have an account?
-        <a href="/account/signin/" class="">
-            signin
-        </a>
-    </div>
+ 
 {% endblock %}
 
 
