@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from generic.variables import LOGIN_URL
 
 from home.forms import GuideProfileForm,SpotGuideForm
-from home.models import GuideProfile, SpotGuide, Spot
+from home.models import GuideProfile, SpotGuide, Spot,SpotGuideMedia
 	
 
 @login_required(login_url=LOGIN_URL)
@@ -91,8 +91,10 @@ def page(request, uid, name):
 	try:
 		spot_id = Spot.objects.get(name__iexact=name).uid
 		page = SpotGuide.objects.get(guide_id=uid, spot_id=spot_id)
+		media = SpotGuideMedia.objects.filter(spot_guide_id=page.uid)
 		context = {
-			'page' : page
+			'page' : page,
+			'media' : media
 		}
 
 		return render(request, 'home/guide/page.html', context)

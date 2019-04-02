@@ -8,6 +8,7 @@
 
 
 	<link rel="stylesheet" type="text/css" href="{% static 'css/home/spot/detail.css'%}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/generic/guide-card.css'%}">
 {% endblock %}
 
 
@@ -28,18 +29,26 @@
 				</div>
 			{% endfor %}
 		</div>
-		<br><br><br><br><br>
+		<br><br>
 	</div>
 	<div class="container-fluid">
+		<h4>Guide list for this spot</h4>
 		<div class="row">
 			{% for item in guides %}
-				<div class="col-md-4">
-					{{ item.guide.account.name }}
-				</div>
+				<div class="col-md-4 grid-item">
+                    <figure class="guide-card-container">
+                        <img src="/media/{{ item.logo }}">
+                        <figcaption>
+                            <p class="title">{{ item.guide.account.name }}</p>
+                        </figcaption>
+                        <a href="/guide/{{item.guide.uid}}/spot/{{spot.name}}/"></a>
+                    </figure>
+                </div>
 			{% empty %}
 				<h5>No guide available for this spot</h5>
 			{% endfor %}
 		</div>
+		<br><br><br>
 	</div>
 {% endblock %}
 
