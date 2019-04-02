@@ -30,6 +30,17 @@
 		</div>
 		<br><br><br><br><br>
 	</div>
+	<div class="container-fluid">
+		<div class="row">
+			{% for item in guides %}
+				<div class="col-md-4">
+					{{ item.guide.account.name }}
+				</div>
+			{% empty %}
+				<h5>No guide available for this spot</h5>
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}
 
 

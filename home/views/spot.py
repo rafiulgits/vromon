@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, HttpResponse
 
-from home.models import Spot,SpotGallery
+from home.models import Spot,SpotGallery,SpotGuide
 
 
 def list(request):
@@ -16,8 +16,12 @@ def detail(request, name):
 	try:
 		spot = Spot.objects.get(name__iexact=name)
 		gallery = SpotGallery.objects.filter(spot_id=spot.uid)
+		guides = SpotGuide.objects.filter(spot_id=spot.uid)
 		context['spot'] = spot
 		context['gallery'] = gallery
+		context['guides'] = guides
+		print(guides)
+
 		return render(request, 'home/spot/detail.html', context)
 
 	except ObjectDoesNotExist as e:
