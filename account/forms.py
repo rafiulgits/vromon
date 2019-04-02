@@ -20,7 +20,7 @@ class SignupForm(forms.ModelForm):
 				}),
 
 			'phone' : forms.TextInput(attrs={
-				'placeholder' : 'Phone', 'class' : 'form-control'
+				'placeholder' : 'Phone', 'class' : 'form-control','maxLength':'11'
 				}),
 
 			'email' : forms.EmailInput(attrs={
@@ -28,7 +28,8 @@ class SignupForm(forms.ModelForm):
 				}),
 
 			'gender' : forms.Select(attrs={
-				'class' : 'custom-select'}),
+				'class' : 'custom-select'
+				}),
 		}
 
 	def clean_phone(self):
@@ -67,7 +68,6 @@ class SignupForm(forms.ModelForm):
 		if commit:
 			user.save()
 		return user
-
 
 
 class SigninForm(forms.Form):
@@ -148,18 +148,10 @@ class ProfileUpdateForm(forms.ModelForm):
 
 		return email
 
-	def clean_gender(self):
-		gender = self.cleaned_data['gender']
-		if gender is None:
-			raise forms.ValidationError('set a gender')
-
-		return gender
-
 	def __init__(self, *args, **kwargs):
 		self.user = kwargs.pop('user', None)
 
-		super(ProfileUpdateForm, self).__init__(*args, **kwargs)
-		
+		super(ProfileUpdateForm, self).__init__(*args, **kwargs)		
 
 		self.fields['name'].initial = self.user.name
 		self.fields['email'].initial = self.user.email

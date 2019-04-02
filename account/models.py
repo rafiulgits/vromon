@@ -4,12 +4,13 @@ from django.contrib.auth.models import (
 
 from django.db import models
 
+from uuid import uuid4
 
 _GENDER = (
 	('F', 'Female'),
 	('M', 'Male'),
 	('O', 'Other'),
-	('*', 'Not to say')
+	('*', 'Not to say'),
 )
 
 
@@ -20,8 +21,7 @@ class UserManager(BaseUserManager):
 	def create_user(self, phone, name, email, gender, password=None, is_staff=False, is_superuser=False):
 
 		if not phone or not name or not email:
-			raise ValueError('name, phone and email required')
-
+			raise ValueError('name, phone, email required')
 
 		if not password:
 			raise ValueError('password required')
@@ -50,20 +50,21 @@ class Account(AbstractBaseUser,PermissionsMixin):
 	"""
 	Doc here
 	"""
-	phone = models.CharField(max_length=12, unique=True)
+	phone = models.CharField(max_length=11, unique=True)
 	name = models.CharField(max_length=80)
 	gender = models.CharField(max_length=1, choices=_GENDER, default='*')
 	email = models.EmailField(max_length=45, unique=True)
-	thumbnail = models.TextField(default='https://i.postimg.cc/0N8mRzvP/user.png')
+	thumbnail = models.TextField(default='https://i.postimg.cc/Y2zkXSFB/user.png')
 
 	has_notification = models.BooleanField(default=False)
+	is_guide = models.BooleanField(default=False)
 	
 	is_active = models.BooleanField(default=True)
 	is_staff = models.BooleanField(default=False)
 	is_superuser = models.BooleanField(default=False)
 
 	USERNAME_FIELD = 'phone'
-	REQUIRED_FIELDS = ['name','email','gender']
+	REQUIRED_FIELDS = ['name', 'email', 'gender']
 
 	objects = UserManager()
 
@@ -71,7 +72,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
 		return self.name + ': '+self.phone
 
 	def get_username(self):
-		return self.phone + ' : '+self.name
+		return self.phone
 
 
 	def has_perm(self, perm, obj=None):
@@ -90,7 +91,10 @@ class Account(AbstractBaseUser,PermissionsMixin):
 
 
 
-class GuideProfile(models.Model):
-	account = models.OneToOneField(Account, on_delete=models.CASCADE, primary_key=True)
-	description = models.TextField()
-	rating = models.PositiveIntegerField(default=0)
+class MessageBox(models.Model):
+	uid = models.UUIDField(primary_key=True, default=uuid4)
+	sender = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='sender')
+	receiver = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='receiver')
+	body = models.TextField()
+	date_time = models.DateTimeField(auto_now=True)
+	seen = models.BooleanField(default=False)

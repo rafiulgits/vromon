@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block extra_head %}
+    <title>{{request.user.name}} | Vromon</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/account/manage/profile.css' %}">
 {% endblock %}
 
 
@@ -9,15 +11,29 @@
     <div class="card">
 
         <div class="card-header">
-            <img src="https://i.postimg.cc/0N8mRzvP/user.png" alt="profile-image" class="profile-img">
+            <img src="{{request.user.thumbnail}}" alt="profile-image" class="profile-img">
         </div>
         <div class="card-body">
-            <p class="username">{{ user.name }}</p>
-            <p class="email">{{ user.email }}</p>
-            <p class="phone-number">{{ user.phone }}</p>
-        </div>
-    
+            <h6 class="list-group-item">Name : {{request.user.name}}</h6>
+            <h6 class="list-group-item">Email : {{request.user.email}}</h6>
+            <h6 class="list-group-item">Phone : {{request.user.phone}}</h6>
+            {% if request.user.gender == 'M'%}
+                <h6 class="list-group-item">Gender : Male</h6>
+            {% elif request.user.gender == 'F' %}
+                <h6 class="list-group-item">Gender : Female</h6>
+            {% elif request.user.gender == 'O' %}
+                <h6 class="list-group-item">Gender : Other</h6>
+            {% else %}
+                <h6 class="list-group-item">Gender : Not to say</h6>
+            {% endif %}
+            <br>
+            <a href="update/" class="list-group-item bg-secondary text-white">Update Info</a>
+            <a href="change-password/" class="list-group-item bg-secondary text-white">Change Password</a>
+            {% if request.user.is_guide %}
+                <a href="/guide/{{dashboard_id}}/" class="list-group-item bg-primary text-white">Guide Dashboard</a>
 
+            {% endif %}
+        </div>
     </div>
 
 

@@ -1,0 +1,22 @@
+body {
+	background-color: lightgray;
+}
+.about-block {
+	background-color: white;
+}
+
+.thumbnail-block {
+	width: 200px; height: 200px;
+	margin: 5px;
+}
+
+.thumbnail-block img {
+	width: 100%; height: auto;
+	object-fit: contain;
+	border-radius: 50%;
+}
+
+.description {
+	font-family: monospace;
+	font-size: 25px; line-height: 35px;
+}

@@ -1,4 +1,4 @@
-from account.models import Account,GuideProfile
+from account.models import Account
 from django.db import models
 from generic.variables import IMAGE_DIR
 from uuid import uuid4
@@ -7,6 +7,7 @@ from uuid import uuid4
 class Spot(models.Model):
 	uid = models.AutoField(primary_key=True)
 	name = models.CharField(max_length=30)
+	district = models.CharField(max_length=20)
 	description = models.TextField()
 	logo = models.ImageField(upload_to=IMAGE_DIR)
 
@@ -30,6 +31,13 @@ class SpotComment(models.Model):
 	user = models.ForeignKey(Account, on_delete=models.CASCADE)
 	date_time = models.DateTimeField(auto_now=True)
 
+
+
+class GuideProfile(models.Model):
+	uid = models.UUIDField(primary_key=True, default=uuid4)
+	account = models.OneToOneField(Account, on_delete=models.CASCADE)
+	description = models.TextField()
+	rating = models.PositiveIntegerField(default=0)
 
 
 class SpotGuide(models.Model):
