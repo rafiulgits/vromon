@@ -6,7 +6,9 @@ from home.models import Spot,SpotGallery
 
 def list(request):
 	context = {}
-	return render(request, 'home/index.html', context)
+	spots = Spot.objects.all()
+	context['spots'] = spots
+	return render(request, 'home/spot/list.html', context)
 
 
 def detail(request, name):

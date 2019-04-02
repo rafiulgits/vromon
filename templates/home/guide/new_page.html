@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+	<title>Create Spot Page</title>
+{% endblock %}
+
+
+{% block content %}
+	
+	<div class="d-flex justify-content-center align-items-center">
+		<div class="col-md-6 list-group-item">
+			<h4 align="ceneter">New guide page for a Spot</h4>
+			<form method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ form.as_p}}
+				<button class="btn btn-success">Create</button>
+			</form>	
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block extra_script %}
+{% endblock %}

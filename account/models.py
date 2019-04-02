@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
 
 from django.db import models
 
+from uuid import uuid4
 
 _GENDER = (
 	('F', 'Female'),
@@ -56,6 +57,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
 	thumbnail = models.TextField(default='https://i.postimg.cc/Y2zkXSFB/user.png')
 
 	has_notification = models.BooleanField(default=False)
+	is_guide = models.BooleanField(default=False)
 	
 	is_active = models.BooleanField(default=True)
 	is_staff = models.BooleanField(default=False)
@@ -88,7 +90,11 @@ class Account(AbstractBaseUser,PermissionsMixin):
 		return all(self.has_perm(perm, obj) for perm in perms)
 
 
-class GuideProfile(models.Model):
-	account = models.OneToOneField(Account, on_delete=models.CASCADE, primary_key=True)
-	description = models.TextField()
-	rating = models.PositiveIntegerField(default=0)
+
+class MessageBox(models.Model):
+	uid = models.UUIDField(primary_key=True, default=uuid4)
+	sender = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='sender')
+	receiver = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='receiver')
+	body = models.TextField()
+	date_time = models.DateTimeField(auto_now=True)
+	seen = models.BooleanField(default=False)

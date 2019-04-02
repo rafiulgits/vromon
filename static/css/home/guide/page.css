@@ -1,0 +1,9 @@
+.logo-container {
+ 	position: relative;
+ 	width: 100%; height: 500px;
+}
+
+.logo-container img {
+	width: 100%; height: 100%;
+	object-fit: cover;
+}

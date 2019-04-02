@@ -70,8 +70,6 @@ class SignupForm(forms.ModelForm):
 		return user
 
 
-
-
 class SigninForm(forms.Form):
 	phone = forms.CharField(max_length=12, widget=forms.TextInput(attrs=
 		{'placeholder' : 'Phone', 
@@ -112,8 +110,6 @@ class PasswordChangeForm(forms.Form):
 		self.user = kwargs.pop('user', None)
 
 		super(PasswordChangeForm, self).__init__(*args, **kwargs)
-
-
 
 
 class ProfileUpdateForm(forms.ModelForm):
@@ -160,3 +156,4 @@ class ProfileUpdateForm(forms.ModelForm):
 		self.fields['name'].initial = self.user.name
 		self.fields['email'].initial = self.user.email
 		self.fields['gender'].initial = self.user.gender
+

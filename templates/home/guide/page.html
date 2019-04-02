@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+	<title>{{page.spot.name}} | {{page.guide.account.name}}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/home/guide/page.css'%}">
+{% endblock %}
+
+
+{% block content %}
+	<div class="d-flex justify-content-center align-items-center">
+		<div class="col-md-8 bg-white">
+			<br>
+			<h2>{{page.spot.name}}</h2>
+			<a href="/guide/{{page.guide.uid}}/" class="list-group-item-action">
+				{{page.guide.account.name}}
+			</a>
+			<br>
+			<div class="logo-container">
+				<img src="/media/{{page.logo}}">
+			</div>
+			<br><br>
+			<h5>{{page.details |linebreaks |urlize}}</h5>
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block extra_script %}
+	<script
+		src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		crossorigin="anonymous">
+	</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+	<script type="text/javascript" src="{% static 'js/home/spot/detail.js'%}"></script>
+{% endblock %}

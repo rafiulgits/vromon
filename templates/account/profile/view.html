@@ -29,6 +29,10 @@
             <br>
             <a href="update/" class="list-group-item bg-secondary text-white">Update Info</a>
             <a href="change-password/" class="list-group-item bg-secondary text-white">Change Password</a>
+            {% if request.user.is_guide %}
+                <a href="/guide/{{dashboard_id}}/" class="list-group-item bg-primary text-white">Guide Dashboard</a>
+
+            {% endif %}
         </div>
     </div>
 

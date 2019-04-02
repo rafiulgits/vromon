@@ -10,6 +10,7 @@
 
 {% block content %}
 	<div class="container fluid">
+        <h1 class="list-group-item">Popular Spots</h1>
         <div class="row">
             {% for item in spots %}
                 <div class="col-md-6 grid-item">
@@ -24,6 +25,10 @@
                 </div>
             {% endfor %}
         </div>
+        <a href="/explore/" class="list-group-item btn bg-secondary text-white">
+            Browse All Available Spots
+        </a>
+        <br><br><br>
     </div>
 {% endblock %}
 

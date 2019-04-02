@@ -19,7 +19,7 @@
 				<h1 id="title">{{spot.name}}</h1>
 			</div>
 		</div>
-		<p class="list-group-item" id="description">{{spot.description}}</p>
+		<div class="list-group-item" id="description">{{spot.description | linebreaks | urlize}}</div>
 		<br>
 		<div class="spot-image-slider">
 			{% for item in gallery %}
