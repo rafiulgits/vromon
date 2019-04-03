@@ -41,7 +41,6 @@ class GuideProfileForm(forms.ModelForm):
 
 
 
-
 class SpotGuideForm(forms.ModelForm):
 
 	class Meta:
@@ -79,120 +78,140 @@ class SpotGuideForm(forms.ModelForm):
 
 
 
-# class SpotCommentForm(forms.ModelForm):
+class SpotGuideUpdateForm(forms.ModelForm):
 
-# 	class Meta:
-# 		model = SpotComment
-# 		fields = ["body"]
+	class Meta:
+		model = SpotGuide
+		fields = ['spot', 'details']
 
-# 		widgets = {
-# 			"body": forms.TextInput(attrs={'placeholder':'giver your comment'})
-# 		}
+		widgets = {
+			'spot' : forms.Select(attrs={
+				'class' : 'custom-select'
+				}),
 
-
-# 	def save(self, commit=True):
-# 		spot_comment = super(SpotCommentForm, self).save(commit=False)
-# 		spot_comment.user = self.user
-# 		spot_comment.spot = self.spot
-# 		if commit:
-# 			spot_comment.save()
-
-# 		return spot_comment
+			'details' : forms.Textarea(attrs={
+				'class' : 'form-control'
+				}),
+		}
 
 
-# 	def __init__(self, *args, **kwargs):
-# 		self.spot = kwargs.pop('spot', None)
-# 		self.user = kwargs.pop('user', None)
-# 		super(SpotCommentForm, self).__init__(*args, **kwargs)
+	def clean_spot(self):
+		spot = self.cleaned_data['spot']
+		if self.spot_guide.spot == spot:
+			return spot
+
+		query = SpotGuide.objects.filter(spot=spot, guide=self.guide)
+		if query.exists():
+			raise forms.ValidationError('You already created a page for this spot')
+
+		return spot
 
 
+	def __init__(self, *args, **kwargs):
+		self.guide = kwargs.pop('guide', None)
+		self.spot_guide = kwargs.pop('spot_guide', None)
 
-# class EventForm(forms.ModelForm):
-# 	class Meta:
-# 		model = Event
-# 		fields = [
-# 			"title",
-# 			"description"
-# 		]
+		super(SpotGuideUpdateForm, self).__init__(*args, **kwargs)
 
-# 		widgets={
-# 			"title": forms.TextInput(attrs={'placeholder' : 'event title'}),
-# 			"description" : forms.TextInput(attrs={'placeholder' : 'event description'})
-# 		}
+		self.fields['spot'].initial = self.spot_guide.spot
+		self.fields['details'].initial = self.spot_guide.details
 
 
-# 	def save(self, commit=True):
-# 		event = super(EventForm, self).save(commit=False)
-# 		event.organizer = self.organizer
-# 		if commit:
-# 			event.save()
-# 		return event
+class SpotGuideMediaForm(forms.ModelForm):
+	class Meta:
+		model = SpotGuideMedia
+		fields = ['image']
+
+		widgets = {
+			'image' : forms.FileInput(attrs={
+				'class' : 'form-control',
+				'accept' : '.jpg, .png, .jpeg'
+			})
+		}
 
 
-# 	def __init__(self, *args, **kwargs):
-# 		self.organizer = kwargs.pop('organizer', None)
-# 		super(EventForm, self).__init__(*args, **kwargs)
+class SpotCommentForm(forms.ModelForm):
+
+	class Meta:
+		model = SpotComment
+		fields = ["body"]
+
+		widgets = {
+			"body": forms.Textarea(attrs={'placeholder':'giver your comment'})
+		}
 
 
+	def save(self, commit=True):
+		spot_comment = super(SpotCommentForm, self).save(commit=False)
+		spot_comment.user = self.user
+		spot_comment.spot = self.spot
+		if commit:
+			spot_comment.save()
 
-# class EventCommentForm(forms.ModelForm):
-# 	class Meta:
-# 		model = EventComment
-# 		fields = [
-# 			"body"
-# 		]
-
-# 		widgets = {
-# 			"body": forms.TextInput(attrs={'placeholder':'giver your comment'})
-# 		}
+		return spot_comment
 
 
-
-# 	def save(self, commit=True):
-# 		event_comment = super(EventCommentForm, self).save(commit=False)
-# 		event_comment.user = self.user
-# 		event_comment.event = self.event
-# 		if commit:
-# 			event_comment.save()
-# 		return event_comment
-
-
-
-# 	def  __init__(self, *args, **kwargs):
-# 		self.user = kwargs.pop('user', None)
-# 		self.event = kwargs.pop('event', None)
-# 		super(EventCommentForm, self).__init__(*args, **kwargs)
+	def __init__(self, *args, **kwargs):
+		self.spot = kwargs.pop('spot', None)
+		self.user = kwargs.pop('user', None)
+		super(SpotCommentForm, self).__init__(*args, **kwargs)
 
 
 
+class EventForm(forms.ModelForm):
+	class Meta:
+		model = Event
+		fields = [
+			"title",
+			"description"
+		]
+
+		widgets={
+			"title": forms.Textarea(attrs={'placeholder' : 'event title'}),
+			"description" : forms.Textarea(attrs={'placeholder' : 'event description'})
+		}
+
+
+	def save(self, commit=True):
+		event = super(EventForm, self).save(commit=False)
+		event.organizer = self.organizer
+		if commit:
+			event.save()
+		return event
+
+
+	def __init__(self, *args, **kwargs):
+		self.organizer = kwargs.pop('organizer', None)
+		super(EventForm, self).__init__(*args, **kwargs)
 
 
 
-# class SpotGuideMediaForm(model.ModelForm):
-# 	class Meta:
-# 		model = SpotGuideMedia
-# 		fields = ['image']
+class EventCommentForm(forms.ModelForm):
+	class Meta:
+		model = EventComment
+		fields = [
+			"body"
+		]
 
-# 		widgets = {
-# 			'image' : forms.FileInput(attrs={
-# 				'class' : ''
-# 			})
-# 		}
+		widgets = {
+			"body": forms.Textarea(attrs={'placeholder':'giver your comment'})
+		}
 
 
-# 	def save(self, commit=True):
-# 		spot_guide_media = super(SpotGuideMediaForm, self).save(commit=False)
-# 		spot_guide_media.spot_guide = self.spot_guide
 
-# 		if commit:
-# 			spot_guide_media.save()
-# 		return spot_guide_media
+	def save(self, commit=True):
+		event_comment = super(EventCommentForm, self).save(commit=False)
+		event_comment.user = self.user
+		event_comment.event = self.event
+		if commit:
+			event_comment.save()
+		return event_comment
 
-# 		widgets = {
-# 			"body": forms.TextInput(attrs={'placeholder':'giver your comment'})
-# 		}
 
-# 	def __init__(self, *args, **kwargs):
-# 		self.spot_guide = kwargs.pop('spot_guide', None)
-# 		super(SpotGuideMediaForm, self).__init__(*args, **kwargs)
+
+	def  __init__(self, *args, **kwargs):
+		self.user = kwargs.pop('user', None)
+		self.event = kwargs.pop('event', None)
+		super(EventCommentForm, self).__init__(*args, **kwargs)
+
 

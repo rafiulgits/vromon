@@ -4,7 +4,8 @@ from django.shortcuts import render, redirect, HttpResponse
 
 from generic.variables import LOGIN_URL
 
-from home.forms import GuideProfileForm,SpotGuideForm
+from home.forms import (GuideProfileForm,SpotGuideForm,SpotGuideUpdateForm,
+	SpotGuideMediaForm)
 from home.models import GuideProfile, SpotGuide, Spot,SpotGuideMedia
 	
 
@@ -92,12 +93,75 @@ def page(request, uid, name):
 		spot_id = Spot.objects.get(name__iexact=name).uid
 		page = SpotGuide.objects.get(guide_id=uid, spot_id=spot_id)
 		media = SpotGuideMedia.objects.filter(spot_guide_id=page.uid)
-		context = {
-			'page' : page,
-			'media' : media
-		}
+
+		context = {}
+
+		if page.guide.account == request.user:
+			form = SpotGuideMediaForm()
+			context['form'] = form
+
+		context['page'] =  page
+		context['media'] = media
 
 		return render(request, 'home/guide/page.html', context)
+	except ObjectDoesNotExist as e:
+		pass
+
+	return HttpResponse('request not found')
+
+
+
+@login_required(login_url=LOGIN_URL)
+def page_update(request, uid, name):
+	try:
+		spot_id = Spot.objects.get(name__iexact=name).uid
+		page = SpotGuide.objects.get(guide_id=uid, spot_id=spot_id)
+
+		if request.user != page.guide.account:
+			return HttpResponse('Invalid request')
+		context = {}
+
+		if request.method == 'POST':
+			form = SpotGuideUpdateForm(request.POST, guide=page.guide, spot_guide=page)
+			if form.is_valid():
+				page.details = form.cleaned_data['details']
+				page.spot = form.cleaned_data['spot']
+				page.save()
+
+				return redirect('/guide/'+uid+'/'+'spot/'+name+'/')
+
+
+		form = SpotGuideUpdateForm(guide=page.guide, spot_guide=page)
+		context['form'] = form
+		
+		return render(request, 'home/guide/page_update.html', context)
+	except ObjectDoesNotExist as e:
+		pass
+
+	return HttpResponse('request not found')
+
+
+
+@login_required(login_url=LOGIN_URL)
+def upload_image(request, uid, name):
+	try:
+		spot_id = Spot.objects.get(name__iexact=name).uid
+		page = SpotGuide.objects.get(guide_id=uid, spot_id=spot_id)
+
+		if request.user != page.guide.account:
+			return HttpResponse('Invalid request')
+		context = {}
+
+		if request.method == 'POST':
+			form = SpotGuideMediaForm(request.POST, request.FILES)
+			if form.is_valid():
+				media = SpotGuideMedia(spot_guide=page)
+				media.image = form.cleaned_data['image']
+				media.save()
+
+				
+				return redirect('/guide/'+uid+'/'+'spot/'+name+'/')
+
 	except ObjectDoesNotExist as e:
 		pass
 
