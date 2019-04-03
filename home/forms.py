@@ -107,61 +107,34 @@ class SpotGuideForm(forms.ModelForm):
 
 
 
-# class EventForm(forms.ModelForm):
-# 	class Meta:
-# 		model = Event
-# 		fields = [
-# 			"title",
-# 			"description"
-# 		]
-
-# 		widgets={
-# 			"title": forms.TextInput(attrs={'placeholder' : 'event title'}),
-# 			"description" : forms.TextInput(attrs={'placeholder' : 'event description'})
-# 		}
+class EventForm(forms.ModelForm):
+	class Meta:
+		model = Event
+		fields = [
+			"title",
+			"description"
+		]
 
 
-# 	def save(self, commit=True):
-# 		event = super(EventForm, self).save(commit=False)
-# 		event.organizer = self.organizer
-# 		if commit:
-# 			event.save()
-# 		return event
-
-
-# 	def __init__(self, *args, **kwargs):
-# 		self.organizer = kwargs.pop('organizer', None)
-# 		super(EventForm, self).__init__(*args, **kwargs)
+	def __init__(self, *args, **kwargs):
+		self.organizer = kwargs.pop('organizer', None)
+		super(EventForm, self).__init__(*args, **kwargs)
 
 
 
-# class EventCommentForm(forms.ModelForm):
-# 	class Meta:
-# 		model = EventComment
-# 		fields = [
-# 			"body"
-# 		]
+class EventCommentForm(forms.ModelForm):
+	class Meta:
+		model = EventComment
+		fields = [
+			"body"
+		]
 
-# 		widgets = {
-# 			"body": forms.TextInput(attrs={'placeholder':'giver your comment'})
-# 		}
+		widgets = {
+			"body": forms.Textarea(attrs={'placeholder':'giver your comment' , 'class': 'form-control' })
+		}
 
-
-
-# 	def save(self, commit=True):
-# 		event_comment = super(EventCommentForm, self).save(commit=False)
-# 		event_comment.user = self.user
-# 		event_comment.event = self.event
-# 		if commit:
-# 			event_comment.save()
-# 		return event_comment
-
-
-
-# 	def  __init__(self, *args, **kwargs):
-# 		self.user = kwargs.pop('user', None)
-# 		self.event = kwargs.pop('event', None)
-# 		super(EventCommentForm, self).__init__(*args, **kwargs)
+	def  __init__(self, *args, **kwargs):
+		super(EventCommentForm, self).__init__(*args, **kwargs)
 
 
 
