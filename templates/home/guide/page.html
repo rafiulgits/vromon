@@ -17,6 +17,22 @@
 			<a href="/guide/{{page.guide.uid}}/" class="goto guide-name">
 				{{page.guide.account.name}}
 			</a>
+			{% if request.user == page.guide.account %}
+				<div class="list-group-item">
+					<a href="update/" class="goto list-group-item">Update This Page</a>
+					<button data-toggle="collapse" data-target="#image-form" class="btn btn-secondary btn-block">
+						Upload Image for this page
+					</button>
+					<div id="image-form" class="collapse">
+						<form method="POST" enctype="multipart/form-data" action="upload-image/">
+							{% csrf_token %}
+							{{ form.as_p}}
+							<button class="btn btn-success">Upload</button>
+						</form>
+					</div>
+
+				</div>
+			{% endif %}
 			<div class="logo-container">
 				<img src="/media/{{page.logo}}">
 			</div>

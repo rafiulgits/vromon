@@ -17,5 +17,8 @@ urlpatterns = [
     path('guide/<uid>/', guide.dashboard, name='guide-dashboard'),
     path('guide/<uid>/create-spot-page/', guide.new_page, name='new-page'),
     path('guide/<uid>/spot/<name>/', guide.page, name='page'),
+    path('guide/<uid>/spot/<name>/update/', guide.page_update, name='page-update'),
+    path('guide/<uid>/spot/<name>/upload-image/', guide.upload_image)
+    
     
 ]
