@@ -140,23 +140,10 @@ class SpotCommentForm(forms.ModelForm):
 			"body": forms.Textarea(attrs={'placeholder':'giver your comment'})
 		}
 
-
-	def save(self, commit=True):
-		spot_comment = super(SpotCommentForm, self).save(commit=False)
-		spot_comment.user = self.user
-		spot_comment.spot = self.spot
-		if commit:
-			spot_comment.save()
-
-		return spot_comment
-
-
 	def __init__(self, *args, **kwargs):
 		self.spot = kwargs.pop('spot', None)
 		self.user = kwargs.pop('user', None)
 		super(SpotCommentForm, self).__init__(*args, **kwargs)
-
-
 
 class EventForm(forms.ModelForm):
 	class Meta:
@@ -165,19 +152,6 @@ class EventForm(forms.ModelForm):
 			"title",
 			"description"
 		]
-
-		widgets={
-			"title": forms.Textarea(attrs={'placeholder' : 'event title'}),
-			"description" : forms.Textarea(attrs={'placeholder' : 'event description'})
-		}
-
-
-	def save(self, commit=True):
-		event = super(EventForm, self).save(commit=False)
-		event.organizer = self.organizer
-		if commit:
-			event.save()
-		return event
 
 
 	def __init__(self, *args, **kwargs):
@@ -194,24 +168,12 @@ class EventCommentForm(forms.ModelForm):
 		]
 
 		widgets = {
-			"body": forms.Textarea(attrs={'placeholder':'giver your comment'})
+			"body": forms.Textarea(attrs={'placeholder':'giver your comment' , 'class': 'form-control' })
 		}
 
-
-
-	def save(self, commit=True):
-		event_comment = super(EventCommentForm, self).save(commit=False)
-		event_comment.user = self.user
-		event_comment.event = self.event
-		if commit:
-			event_comment.save()
-		return event_comment
-
-
-
 	def  __init__(self, *args, **kwargs):
-		self.user = kwargs.pop('user', None)
-		self.event = kwargs.pop('event', None)
 		super(EventCommentForm, self).__init__(*args, **kwargs)
+
+
 
 

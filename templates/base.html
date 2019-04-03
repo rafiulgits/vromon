@@ -33,7 +33,7 @@
 					</a>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 						<a class="dropdown-item" href="/account/">{{request.user.name}}</a>
-						<a class="dropdown-item" href="#">Create Event</a>
+						<a class="dropdown-item" href="/event/create/">Create Event</a>
 						{% if not request.user.is_guide %}
 							<a class="dropdown-item" href="/guide/join/">Be A Guide</a>
 						{% endif %}
