@@ -1,0 +1,60 @@
+.hotel-img {
+    height: 50vh;
+    object-fit: cover;
+}
+
+.hotel-map {
+    height: 50vh;
+}
+
+.hotel-name{
+    font-size: 3rem;
+    margin-left: 40px;
+}
+
+.details {
+    margin-top: 40px;
+}
+
+.price-range {
+    margin-left: 40px;
+    font-size: 30px;
+}
+
+.rating {
+    margin-left: 40px;
+    font-size: 30px;
+    color: #333;
+}
+
+.hotel-description{
+    text-align: justify;
+    font-size: 1.2rem;
+}
+
+.comment-section {
+    margin-top: 40px;
+}
+
+.comment {
+    margin-top: 30px;
+}
+
+.comment-thumbnail {
+    width: 50px;
+    display: inline-block;
+}
+
+.comment-name {
+    display: inline-block;
+}
+
+.comment-contain {
+    margin-left: 50px;
+    padding-left: 20px;
+    border-left: 3px solid #000;
+}
+
+.comment-data {
+    margin-left: 50px;
+}
