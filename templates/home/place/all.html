@@ -3,10 +3,30 @@
 
 {% block extra_head %}
 	<title>All Places</title>
+	<link rel="stylesheet" href="{% static 'css/home/index.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/generic/image-card.css' %}">
 {% endblock %}
 
 
 {% block content %}
+	<div class="section mx-auto" >
+	        <div class="cards row card-section">
+	        	{% for item in places %}
+		            <div class="col-lg-4 col-md-6 col-sm-12">
+		                <div class="card">
+		                    <div class="card-image-wrapper">
+		                        <img class="card-img-top" src="/{{item.image}}" alt="Nanna!">
+		                    </div>
+		                    <div class="card-body">
+		                        <h4 class="card-title">{{item.name}}</h4>
+		                        <p class="card-text"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></p>
+		                        <a href="/place/{{item.id}}/" class="btn btn-info">Go to page</a>
+		                    </div>
+		                </div>
+		            </div>
+	            {% endfor %}
+	        </div>
+	</div>
 {% endblock %}
 
 
