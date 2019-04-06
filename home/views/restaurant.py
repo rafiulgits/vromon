@@ -2,7 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, HttpResponse
 
 from home.forms import ReviewCommentForm
-from home.models import Restaurant
+from home.models import Restaurant, ReviewComment
 
 
 def single(request, uid):
@@ -31,5 +31,6 @@ def single(request, uid):
 def all(request):
 	context = {}
 	restaurants = Restaurant.objects.all()
+	context['restaurants'] = restaurants
 
 	return render(request, 'home/restaurant/all.html', context)
