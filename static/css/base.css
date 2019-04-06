@@ -9,13 +9,28 @@ body {
     position: relative;
 }
 
-#profile-button {
-    width: 35px; height: 35px;
-    margin-left: 40px;
+#profile-button, #search-button, #message-button, #bell-button {
+    font-size: 35px;
+    margin-left: 50px;
     margin-right: 10px;
     line-height: 35px;
     color: #f5f5f5;
-    border-radius: 10px;
+    margin-left: 20px;
+    font-size: 25px;
+}
+
+#profile-button {
+    height: 38px;
+    margin-top: -12px;
+}
+
+#search-button {
+    display: none;
+    cursor: pointer;
+}
+
+.search-bar {
+    max-width: 400px;
 }
 
 .dropdown-menu {
@@ -29,7 +44,6 @@ body {
 	border-radius: 0px;
 	color: #f5f5f5;
 	font-weight: bold;
-    margin-right: 10px;
 }
 
 .search-bar:focus {
@@ -44,3 +58,109 @@ body {
 	font-weight: bold;
 }
 
+.responsive-search-page {
+    height: 100vh;
+    width: 100vw;
+    z-index: 100;
+    position: fixed;
+    background: #00796Bf0;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.search-bar-phone {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100% !important;
+}
+
+.search-cross {
+    position: absolute;
+    width: 2px;
+    height: 50px;
+    border: 5px solid #004D40;
+    top: 75px;
+    right: 50px;
+    transform: rotate(45deg);
+}
+.search-cross-2 {
+    position: absolute;
+    width: 2px;
+    height: 50px;
+    border: 5px solid #004D40;
+    top: 75px;
+    right: 50px;
+    transform: rotate(-45deg);
+}
+
+.nav-buttons {
+    display: inline-block;
+}
+
+i {
+    display: inline-block;
+}
+
+.dropdown {
+    display: inline-block;
+}
+
+.card{
+    width: 400px;
+    margin: 75px auto 0;
+    background-color: #fff;
+    box-shadow: 0 3px 30px rgba(0, 0 , 0, .14);
+    color: #444;
+    text-align: center;
+    font-size: 16px;
+}
+
+
+.card .card-header{
+    position: relative;
+    height: 50px;
+}
+
+
+.card .card-header .profile-img{
+    width: 150px;
+    height: 150px;
+    border-radius: 1000px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50% ,-50%);
+    border: 6px solid #fff;
+    box-shadow: 0 0 20px rgba(0 , 0, 0, .3);
+}
+
+.card .card-body{
+    padding: 100px 40px;
+}
+
+.content {
+    margin-top: 80px;
+}
+
+@media only screen and (max-width: 700px) {
+    .search-bar-pc {
+        display: none;
+    }
+    #search-button {
+        display: inline-block;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .search-bar {
+        width: 250px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .search-bar {
+        max-width: 300px;
+    }
+}
