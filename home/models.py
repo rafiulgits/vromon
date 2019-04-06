@@ -13,32 +13,35 @@ _REVIEW_MODEL = (
 class Restaurant(models.Model):
 	name = models.CharField(max_length=30)
 	description = models.TextField()
-	geo_longitude = models.DecimalField(max_digits=8, decimal_places=3)
-	geo_latitude = models.DecimalField(max_digits=8, decimal_places=3)
-	address = models.TextField()
-	avg_rating = models.SmallIntegerField(default=0)
-	total_rated = models.IntegerField(default=0)
+	geo_long = models.CharField(max_length=10)
+	geo_lat = models.CharField(max_length=10)
+	address = models.CharField(max_length=30)
+	total_rating = models.PositiveIntegerField(default=0)
+	total_rated = models.PositiveIntegerField(default=0)
+	image = models.ImageField(upload_to='images/')
 
 
 class Hotel(models.Model):
 	name = models.CharField(max_length=30)
 	description = models.TextField()
-	geo_longitude = models.DecimalField(max_digits=8, decimal_places=3)
-	geo_latitude = models.DecimalField(max_digits=8, decimal_places=3)
-	address = models.TextField()
+	geo_long = models.CharField(max_length=10)
+	geo_lat = models.CharField(max_length=10)
+	address = models.CharField(max_length=30)
 	avg_rating = models.SmallIntegerField(default=0)
-	total_rated = models.IntegerField(default=0)
-	avg_price = models.CharField(max_length=12)
+	total_rating = models.PositiveIntegerField(default=0)
+	total_rated = models.PositiveIntegerField(default=0)
+	image = models.ImageField(upload_to='images/')
 
 
 class Place(models.Model):
 	name = models.CharField(max_length=30)
 	description = models.TextField()
-	geo_longitude = models.DecimalField(max_digits=8, decimal_places=3)
-	geo_latitude = models.DecimalField(max_digits=8, decimal_places=3)
-	address = models.TextField()
-	avg_rating = models.SmallIntegerField(default=0)
-	total_rated = models.IntegerField(default=0)
+	geo_long = models.CharField(max_length=10)
+	geo_lat = models.CharField(max_length=10)
+	address = models.CharField(max_length=30)
+	total_rating = models.PositiveIntegerField(default=0)
+	total_rated = models.PositiveIntegerField(default=0)
+	image = models.ImageField(upload_to='images/')
 
 
 

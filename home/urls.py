@@ -11,6 +11,6 @@ urlpatterns = [
     path('place/<uid>/', place.single, name='single-place'),
 
     path('restaurant/all/', restaurant.all, name='all-restaurant'),
-    path('restaurant/<uid>', restaurant.single, name='single-restaurant'),
+    path('restaurant/<uid>/', restaurant.single, name='single-restaurant'),
 
 ]
