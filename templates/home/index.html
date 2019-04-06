@@ -9,52 +9,63 @@
 
 
 {% block content %}
-	<div class="container-fluid list-group-item">
-        <h2>Popular Spots</h2>
-        <div class="row">
+	<div class="container-fluid section mx-auto">
+        <div class="section-title">
+            <h4 class="section-title-text">
+                Best Spots
+            </h4>
+        </div>
+        <div class="cards row card-section">
             {% for item in spots %}
-                <div class="col-md-6 grid-item">
-                    <figure class="dash-card-container">
-                        <img src="/media/{{ item.logo }}">
-                        <figcaption>
-                            <p class="title1">{{ item.name }}</p>
-                            <p class="title2">{{ item.district }}</p>
-                        </figcaption>
-                        <a href="/spot/{{item.name}}/"></a>
-                    </figure>
-                </div>
+
+                <div class="card profile-card">   						<!-- Spot Card Started -->
+                    <div class="card-image-wrapper">  		<!-- Spot Image -->
+                        <img class="card-img-top" src="/media/{{ item.logo }}" alt="{{ item.name }}">
+                    </div>
+                    <div class="card-body spot-card-body">
+                        <h4 class="card-title">{{ item.name }}</h4>	<!-- Spot Name -->
+                        <p class="card-text"><i class="fas fa-map-marker-alt"></i> {{ item.district }}</p>
+                        <a href="/spot/{{item.name}}/" class="btn btn-info">View Posts</a>
+                    </div>
+                </div>										<!-- Spot Card End -->
             {% endfor %}
         </div>
-        <br>
-        <div class="d-flex justify-content-center">
-            <a href="/explore/" class="list-group-item btn bg-secondary text-white">
-                Browse All Available Spots
-            </a>
+        <div class="see-more">
+            <a href="/explore/" class="btn btn-info see-more-btn">Explore More Spots</a>
         </div>
     </div>
     <br><br>
-    <div class="container-fluid list-group-item">
-        <h2>Running Events</h2>
-        <div class="row">
+    <div class="container-fluid section mx-auto">
+        <div class="section-title">
+			<h4 class="section-title-text">
+				Active Events
+			</h4>
+		</div>
+        <div class="cards row card-section">
             {% for item in events %}
-                <div class="col-md-4 ">
-                    <div class="card">                          
-                        <div class="card-image-wrapper">     
-                            <img class="card-img-top" src="https://nijhoom.com/wp-content/uploads/2018/06/jaflong-zero-point-600-o.jpg" alt="Jaflong">
-                        </div>
-                        <div class="card-body">
-                            <h4 class="card-title text-white">{{item.title}}</h4>
-                            <div class="card-text"><i class="fas fa-map-marker-alt"></i> Location</div>
-                            <a href="/event/{{item.uid}}/" class="btn btn-info">Event Details</a>
-                        </div>
-                    </div>
-                </div>
+
+            <div class="card event-card">   						<!-- Event Card Started -->
+				<div class="card-image-wrapper">  					<!-- Event Image -->
+					<img class="card-img-top" src="/media/{{ item.logo }}" alt="{{item.title}}">
+				</div>
+				<div class="card-body">
+				    <h4 class="card-title">{{item.title}}</h4>	<!-- Event Name -->
+					<p class="card-text"><i class="fas fa-map-marker-alt"></i> Location</p>
+					<div class="progress" style="height: 25px;">
+						<div class="progress-bar bg-success" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="20" style="width:50%">
+							10/20 Seats Booked
+							
+						</div>
+					</div>
+					
+					<a href="/event/{{item.uid}}/" class="btn btn-success book-button">Book: 1000$</a>
+				</div>
+			</div>
             {% endfor %}
         </div>
-        <br> 
-        <div class="d-flex justify-content-center">
-            <a href="/event/all/" class="btn btn-primary">More events</a>
-        </div> 
+        <div class="see-more">
+			<a href="/event/all" class="btn btn-success see-more-btn">Explore More Events</a>
+		</div>
     </div>
     <br><br>
 {% endblock %}

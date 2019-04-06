@@ -25,27 +25,39 @@
 
 	<div class="navbar fixed-top navbar-dark container-fluid bg-teal">
 		<a href="/" class="navbar-brand col-4">Vromon</a>
-		<div class="input-group col-6 ">
-			<input type="text" name="search" placeholder="Where To?" class="form-control search-bar">
-			{% if request.user.is_authenticated %}
-				<div class="dropdown">
-					<a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<img src="{{request.user.thumbnail}}" id="profile-button">
-					</a>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-						<a class="dropdown-item" href="/account/">{{request.user.name}}</a>
-						<a class="dropdown-item" href="/event/create/">Create Event</a>
-						{% if not request.user.is_guide %}
-							<a class="dropdown-item" href="/guide/join/">Be A Guide</a>
-						{% endif %}
-						<a class="dropdown-item" href="/account/signout/">Sign Out</a>
-					</div>
-				</div>
-			{% else %}
-				<a href="/account/signin/" class="nav-link btn btn-light mr-2">Signin</a>
-				<a href="/account/signup/" class="nav-link btn btn-light mr">Signup</a>
-			{% endif %}
-			
+        <input type="text" name="search" placeholder="Where To?" class="form-control search-bar search-bar-pc">
+        {% if request.user.is_authenticated %}
+            <div class="nav-buttons">
+                <i class="fas fa-search" id="search-button" ></i>
+                <i class="far fa-comment-alt" id="message-button"></i>
+                <i class="far fa-bell" id="bell-button"></i>
+
+                <div class="dropdown">
+                    <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="{{request.user.thumbnail}}" id="profile-button" class="rounded-circle">
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="/account/">{{request.user.name}}</a>
+                        <a class="dropdown-item" href="/event/create/">Create Event</a>
+                        {% if not request.user.is_guide %}
+                            <a class="dropdown-item" href="/guide/join/">Be A Guide</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="/account/signout/">Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <a href="/account/signin/" class="nav-link btn btn-light mr-2">Signin</a>
+            <a href="/account/signup/" class="nav-link btn btn-light mr">Signup</a>
+        {% endif %}
+        
+    </div>
+    
+    <div class="responsive-search-page">
+		<input type="text" name="search" placeholder="Where To?" class="form-control search-bar search-bar-phone">
+		<div id="search-cross">
+			<div class="search-cross"></div>
+			<div class="search-cross-2"></div>
 		</div>
 	</div>
 
@@ -58,7 +70,8 @@
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 	{% block extra_script %}
 	{% endblock %}
 </body>
