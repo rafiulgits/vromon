@@ -157,6 +157,21 @@
                         });
                     {% endfor %}
 
+                    {% for item in places %}
+                        var marker{{forloop.counter}} = new google.maps.Marker({
+                            position: {lat: {{item.geo_lat }} , lng: {{item.geo_lng}}},
+                            map: map,
+                            title: '{{item.name}}'
+                        });
+                    {% endfor %}
+
+                    {% for item in restaurants %}
+                        var marker{{forloop.counter}} = new google.maps.Marker({
+                            position: {lat: {{item.geo_lat }} , lng: {{item.geo_lng}}},
+                            map: map,
+                            title: '{{item.name}}'
+                        });
+                    {% endfor %}
                     
                 });
             } else {
