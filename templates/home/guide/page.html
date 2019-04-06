@@ -34,13 +34,13 @@
 				</div>
 			{% endif %}
 			<div class="logo-container">
-				<img src="/media/{{page.logo}}">
+				<img src="/{{page.logo}}">
 			</div>
 			<div class="page-details">{{page.details |linebreaks |urlize}}</div>
 			<div class="spot-image-slider">
 			{% for item in media %}
 				<div class="image-item">
-					<img src="/media/{{item.image}}">
+					<img src="/{{item.image}}">
 				</div>
 			{% endfor %}
 		</div>

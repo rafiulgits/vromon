@@ -23,7 +23,6 @@ from api import views as apiviews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account.urls')),
-
     path('api/nearby-hotel/', apiviews.nearby_hotel, name='nearby_hotel'),
     path('api/nearby-restaurant/', apiviews.nearby_restaurant, name='nearby-restaurant'),
     path('api/nearby-place/', apiviews.nearby_place, name='nearby-place'),

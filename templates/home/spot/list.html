@@ -3,7 +3,7 @@
 
 {% block extra_head %}
 	<title>Explore</title>
-	<link rel="stylesheet" type="text/css" href="{% static 'css/generic/image-card.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/generic/dash-card.css' %}">
 {% endblock %}
 
 
@@ -14,7 +14,7 @@
             {% for item in spots %}
                 <div class="col-md-6 grid-item">
                     <figure class="dash-card-container">
-                        <img src="/media/{{ item.logo }}">
+                        <img src="/{{ item.logo }}">
                         <figcaption>
                             <p class="title1">{{ item.name }}</p>
                             <p class="title2">{{ item.district }}</p>

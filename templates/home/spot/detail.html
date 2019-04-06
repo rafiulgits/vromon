@@ -15,7 +15,7 @@
 {% block content %}
 	<div class="col-md-12">
 		<div class="logo-container list-group-item">
-			<img src="/media/{{spot.logo}}">
+			<img src="/{{spot.logo}}">
 			<div class="text-block"> 
 				<h1 id="title">{{spot.name}}</h1>
 			</div>
@@ -25,7 +25,7 @@
 		<div class="spot-image-slider">
 			{% for item in gallery %}
 				<div class="image-item">
-					<img src="/media/{{item.image}}">
+					<img src="/{{item.image}}">
 				</div>
 			{% endfor %}
 		</div>
@@ -36,13 +36,10 @@
 		<div class="row">
 			{% for item in guides %}
 				<div class="col-md-4 grid-item">
-                    <figure class="guide-card-container">
-                        <img src="/media/{{ item.logo }}">
-                        <figcaption>
-                            <p class="title">{{ item.guide.account.name }}</p>
-                        </figcaption>
-                        <a href="/guide/{{item.guide.uid}}/spot/{{spot.name}}/"></a>
-                    </figure>
+                   
+                           <p class="title">{{ item.guide.account.name }}</p>
+               
+                        <a href="/guide/{{item.guide.uid}}/spot/{{spot.name}}/">GO TO</a>
                 </div>
 			{% empty %}
 				<h5>No guide available for this spot</h5>
