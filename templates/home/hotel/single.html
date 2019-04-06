@@ -21,44 +21,32 @@
     </div>
     <div class="col-md-6">
         <h3>Description</h3>
-        <p class="hotel-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat alias ut, ab ex reiciendis fugit labore porro delectus nulla expedita ullam saepe magni corporis fugiat quia id fuga quisquam ad.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ratione corrupti voluptates eos, esse velit totam sit dicta asperiores quas ab enim delectus a ducimus sunt amet, obcaecati nam possimus.
-        </p>
+        <p class="hotel-description">{{hotel.description}}</p>
     </div>
 </div>
 <div class="comment-section">
-        <div class="form-group input-group">
-            <textarea class="form-control" rows="1" id="comment" placeholder="Give a comment"></textarea>
-            <button type="submit" class="btn btn-info">Submit</button>
-        </div>
 
-        <div class="comment">
-            <div class="user-details">
-                <img src="https://cdn3.vectorstock.com/i/1000x1000/38/27/male-face-avatar-logo-template-pictogram-vector-11333827.jpg" alt="Avater" class="rounded-circle comment-thumbnail">
-                <h4 class="comment-name">Blabla Blabla</h4>
-                <blockquote class="comment-contain">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur, asperiores aspernatur. Quidem odit, quos expedita eveniet perspiciatis deserunt! Sit perferendis quidem impedit officia ad dolorem obcaecati laudantium tenetur, rem et.</blockquote>
-                <small class="comment-data">3 April, 2019 | Dhaka, Bangladesh</small>
-            </div>
-        </div>
+        {% if request.user.is_authenticated %}
+            <form method="POST" class="col-md-6">
+                {%csrf_token%}
+                {{ form.as_p }}
+                <button class="btn btn-info">Submit</button>
+            </form>
 
-        <div class="comment">
-            <div class="user-details">
-                <img src="https://cdn3.vectorstock.com/i/1000x1000/38/27/male-face-avatar-logo-template-pictogram-vector-11333827.jpg" alt="Avater" class="rounded-circle comment-thumbnail">
-                <h4 class="comment-name">Blabla Blabla</h4>
-                <blockquote class="comment-contain">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur, asperiores aspernatur. Quidem odit, quos expedita eveniet perspiciatis deserunt! Sit perferendis quidem impedit officia ad dolorem obcaecati laudantium tenetur, rem et.</blockquote>
-                <small class="comment-data">3 April, 2019 | Dhaka, Bangladesh</small>
-            </div>
-        </div>
-
-        <div class="comment">
-            <div class="user-details">
-                <img src="https://cdn3.vectorstock.com/i/1000x1000/38/27/male-face-avatar-logo-template-pictogram-vector-11333827.jpg" alt="Avater" class="rounded-circle comment-thumbnail">
-                <h4 class="comment-name">Blabla Blabla</h4>
-                <blockquote class="comment-contain">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur, asperiores aspernatur. Quidem odit, quos expedita eveniet perspiciatis deserunt! Sit perferendis quidem impedit officia ad dolorem obcaecati laudantium tenetur, rem et.</blockquote>
-                <small class="comment-data">3 April, 2019 | Dhaka, Bangladesh</small>
-            </div>
-        </div>
+        {% endif %}
         
+
+        {% for item in comments %}
+
+            <div class="comment">
+                <div class="user-details">
+                    <img src="{{item.user.thumbnail}}" alt="Avater" class="rounded-circle comment-thumbnail">
+                    <h4 class="comment-name">{{item.user.name}}</h4>
+                    <blockquote class="comment-contain">{{item.body}}</blockquote>
+                    <small class="comment-data">{{item.date_time}}</small>
+                </div>
+            </div>
+        {% endfor %}
         
 </div>
 
@@ -72,8 +60,8 @@
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {
-                lat: 23,
-                lng: 81
+                lat: {{hotel.geo_lat}},
+                lng: {{hotel.geo_lng}}
             },
             zoom: 10,
             mapTypeId: 'roadmap'

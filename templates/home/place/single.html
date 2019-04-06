@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/home/hotel/single.css' %}">
+<title>{{ place.name }}</title>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+    <img class="hotel-img col-md-6" src="/{{place.image}}" alt="{{place.name}}">
+    <div class="hotel-map col-md-6" id="map"></div>
+</div>
+<div class="row details">
+    <div class="col-md-6">
+        <h3 class="hotel-name">{{place.name}}</h3>
+        <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+    </div>
+    <div class="col-md-6">
+        <h3>Description</h3>
+        <p class="hotel-description">{{place.description}}</p>
+    </div>
+</div>
+<div class="comment-section">
+        {% if request.user.is_authenticated %}
+            <form method="POST" class="col-md-6">
+                {%csrf_token%}
+                {{ form.as_p }}
+                <button class="btn btn-info">Submit</button>
+            </form>
+
+        {% endif %}
+
+      {% for item in comments %}
+
+            <div class="comment">
+                <div class="user-details">
+                    <img src="{{item.user.thumbnail}}" alt="Avater" class="rounded-circle comment-thumbnail">
+                    <h4 class="comment-name">{{item.user.name}}</h4>
+                    <blockquote class="comment-contain">{{item.body}}</blockquote>
+                    <small class="comment-data">{{item.date_time}}</small>
+                </div>
+            </div>
+        {% endfor %}
+        
+        
+</div>
+
+{% endblock %}
+
+
+{% block extra_script %}
+<script>
+    var map;
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {
+                lat: 23,
+                lng: 81
+            },
+            zoom: 10,
+            mapTypeId: 'roadmap'
+        });
+
+        
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDiMStVQQSQHne9q4DgOzMzKgwarrL5Vc&callback=initMap"
+async defer></script>
+{% endblock %}

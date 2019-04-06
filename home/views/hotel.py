@@ -10,14 +10,21 @@ def single(request, uid):
 		hotel = Hotel.objects.get(id=uid)
 		comments = ReviewComment.objects.filter(for_model = 'H')
 
-		context['rating'] = float(hotel.total_rating/hotel.total_rated)
+		if hotel.total_rated != 0:
+			context['rating'] = float(hotel.total_rating/hotel.total_rated)
+		else:
+			context['rating'] = 0
+
 		context['hotel'] = hotel
 		context['comments'] = comments
 
 		if request.user.is_authenticated:
 
 			if request.method == 'POST':
-				pass
+				form = ReviewCommentForm(request.POST,user=request.user,for_model='H')
+				if form.is_valid():
+					form.save()
+					return redirect('/hotel/'+str(uid)+'/')
 
 			form = ReviewCommentForm()
 			context['form'] = form

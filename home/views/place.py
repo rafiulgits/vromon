@@ -14,11 +14,15 @@ def single(request, uid):
 		context['comments'] = comments
 
 		if request.user.is_authenticated:
-			form = ReviewCommentForm()
-			context['form'] = form
 
 			if request.method == 'POST':
-				pass
+				form = ReviewCommentForm(request.POST,user=request.user,for_model='H')
+				if form.is_valid():
+					form.save()
+					return redirect('/hotel/'+str(uid)+'/')
+
+			form = ReviewCommentForm()
+			context['form'] = form
 
 		return render(request, 'home/place/single.html', context)
 
