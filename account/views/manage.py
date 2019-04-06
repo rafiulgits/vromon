@@ -6,17 +6,13 @@ from django.shortcuts import render, redirect, HttpResponse
 
 from generic.variables import LOGIN_URL
 
-from home.models import GuideProfile
 
 
 @login_required(login_url=LOGIN_URL)
 def profile(request):
 	context = {}
 	user = request.user
-	if user.is_guide:
-		dashboard_id = str(GuideProfile.objects.get(account_id=user.id).uid)
-		context['dashboard_id'] = dashboard_id
-		
+
 	return render(request, 'account/profile/view.html',context)
 
 
