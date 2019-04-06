@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+
+    <title>Event Detail</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home/event/detail.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="event-body">
+
+		<h1 class="event-title">{{ event.title }}</h1>
+		<div class="info">
+			<p>By <span class="blue">{{ event.organizer.name }}</span> <span class="bold">{{ event.date_time }}</span>
+			</p>
+		</div>
+
+		<article class="event-description">
+            {{ event.description }}
+        </article>
+
+
+    {% if request.user.is_authenticated %}
+
+    <form method="POST" class="list-group-item">
+        {% csrf_token %}
+        {{ form.body }}
+        <button class="btn btn-success" type="submit">Comment</button>
+
+    </form>
+    {% endif %}
+
+    <br>
+
+
+    <div class="comments-list" id="comments">
+
+        {%  for item in all_comment %}
+
+        <div class="panel panel-default list-group-item">
+            <div class="panel-heading">
+               <img class="user-thumbnail" src="{{ item.user.thumbnail }}"> {{ item.user.name }}<br><i class="comment-date-time">{{ item.date_time }}</i></br>
+            </div>
+
+            <div class="panel-body">{{ item.body }}</div>
+        </div>
+            <br>
+
+        {% endfor %}
+
+
+    </div>
+
+    </div>
+
+
+
+
+{% endblock %}
+
+
+{% block extra_script %}
+{% endblock %}
