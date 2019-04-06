@@ -153,7 +153,8 @@
                         var marker{{forloop.counter}} = new google.maps.Marker({
                             position: {lat: {{item.geo_lat }} , lng: {{item.geo_lng}}},
                             map: map,
-                            title: '{{item.name}}'
+                            title: '{{item.name}}',
+                            icon: 'http://maps.google.com/mapfiles/kml/pal3/icon21.png'
                         });
                     {% endfor %}
 
@@ -161,7 +162,8 @@
                         var marker{{forloop.counter}} = new google.maps.Marker({
                             position: {lat: {{item.geo_lat }} , lng: {{item.geo_lng}}},
                             map: map,
-                            title: '{{item.name}}'
+                            title: '{{item.name}}',
+                            icon: 'http://maps.google.com/mapfiles/kml/pal4/icon46.png'
                         });
                     {% endfor %}
 
@@ -169,7 +171,8 @@
                         var marker{{forloop.counter}} = new google.maps.Marker({
                             position: {lat: {{item.geo_lat }} , lng: {{item.geo_lng}}},
                             map: map,
-                            title: '{{item.name}}'
+                            title: '{{item.name}}',
+                            icon: 'http://maps.google.com/mapfiles/kml/pal2/icon32.png'
                         });
                     {% endfor %}
                     
