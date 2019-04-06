@@ -30,7 +30,7 @@ function initMap() {
             var currentPosition = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
-            }
+            };
             map.setCenter(currentPosition);
             map.setZoom(15);
             var marker = new google.maps.Marker({

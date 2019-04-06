@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'account', 'home',
+    'tourguide',
 
     'rest_framework',
 ]
