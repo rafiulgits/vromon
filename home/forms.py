@@ -9,6 +9,11 @@ class ReviewCommentForm(forms.ModelForm):
 		model = ReviewComment
 		fields = ['body']
 
+		widgets = {
+			'body' : forms.Textarea(attrs={
+				'class':'form-control'
+				})
+		}
 	def save(self, commit=True):
 		comment = super(ReviewCommentForm, self).save(commit=False)
 		comment.user = self.user
