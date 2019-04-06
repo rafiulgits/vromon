@@ -2,13 +2,83 @@
 {% load static %}
 
 {% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/home/hotel/single.css' %}">
+<title>{{ hotel.name }}</title>
 {% endblock %}
 
 
 {% block content %}
-`
+
+<div class="row">
+    <img class="hotel-img col-md-6" src="/{{restaurant.image}}" alt="{{restaurant.name}}">
+    <div class="hotel-map col-md-6" id="map"></div>
+</div>
+<div class="row details">
+    <div class="col-md-6">
+        <h3 class="hotel-name">{{restaurant.name}}</h3>
+        <div class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+    </div>
+    <div class="col-md-6">
+        <h3>Description</h3>
+        <p class="hotel-description">{{restaurant.description}}</p>
+    </div>
+</div>
+<div class="comment-section">
+        <div class="form-group input-group">
+            <textarea class="form-control" rows="1" id="comment" placeholder="Give a comment"></textarea>
+            <button type="submit" class="btn btn-info">Submit</button>
+        </div>
+
+        <div class="comment">
+            <div class="user-details">
+                <img src="https://cdn3.vectorstock.com/i/1000x1000/38/27/male-face-avatar-logo-template-pictogram-vector-11333827.jpg" alt="Avater" class="rounded-circle comment-thumbnail">
+                <h4 class="comment-name">Blabla Blabla</h4>
+                <blockquote class="comment-contain">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur, asperiores aspernatur. Quidem odit, quos expedita eveniet perspiciatis deserunt! Sit perferendis quidem impedit officia ad dolorem obcaecati laudantium tenetur, rem et.</blockquote>
+                <small class="comment-data">3 April, 2019 | Dhaka, Bangladesh</small>
+            </div>
+        </div>
+
+        <div class="comment">
+            <div class="user-details">
+                <img src="https://cdn3.vectorstock.com/i/1000x1000/38/27/male-face-avatar-logo-template-pictogram-vector-11333827.jpg" alt="Avater" class="rounded-circle comment-thumbnail">
+                <h4 class="comment-name">Blabla Blabla</h4>
+                <blockquote class="comment-contain">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur, asperiores aspernatur. Quidem odit, quos expedita eveniet perspiciatis deserunt! Sit perferendis quidem impedit officia ad dolorem obcaecati laudantium tenetur, rem et.</blockquote>
+                <small class="comment-data">3 April, 2019 | Dhaka, Bangladesh</small>
+            </div>
+        </div>
+
+        <div class="comment">
+            <div class="user-details">
+                <img src="https://cdn3.vectorstock.com/i/1000x1000/38/27/male-face-avatar-logo-template-pictogram-vector-11333827.jpg" alt="Avater" class="rounded-circle comment-thumbnail">
+                <h4 class="comment-name">Blabla Blabla</h4>
+                <blockquote class="comment-contain">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur, asperiores aspernatur. Quidem odit, quos expedita eveniet perspiciatis deserunt! Sit perferendis quidem impedit officia ad dolorem obcaecati laudantium tenetur, rem et.</blockquote>
+                <small class="comment-data">3 April, 2019 | Dhaka, Bangladesh</small>
+            </div>
+        </div>
+        
+        
+</div>
+
 {% endblock %}
 
 
 {% block extra_script %}
+<script>
+    var map;
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: {
+                lat: 23,
+                lng: 81
+            },
+            zoom: 10,
+            mapTypeId: 'roadmap'
+        });
+
+        
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDiMStVQQSQHne9q4DgOzMzKgwarrL5Vc&callback=initMap"
+async defer></script>
 {% endblock %}
